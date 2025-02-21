@@ -126,7 +126,6 @@ const getAssignedEvaluationsByEmployeeId = async (req, res) => {
         },
       },
     ]);
-    console.log(evaluation);
 
     if (!evaluation) {
       return res.status(404).send();
