@@ -5,7 +5,7 @@
 1. **Clonar el repositorio:**
 
    ```bash
-   git clone https://github.com/tu-usuario/evaluation-system.git
+   git clone https://github.com/miguelortis/evaluation_system-api.git
    ```
 
 2. **Instalar dependencias:**
