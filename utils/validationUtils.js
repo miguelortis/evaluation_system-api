@@ -5,7 +5,9 @@
  * @returns {String|null} - Returns a message with missing fields or null if all fields are present.
  */
 function checkRequiredFields(body, requiredFields) {
-  const missingFields = requiredFields.filter((field) => !body[field]);
+  const missingFields = requiredFields.filter(
+    (field) => body[field] === undefined || body[field] === null
+  );
   if (missingFields.length > 0) {
     throw { message: `Missing required fields: ${missingFields.join(", ")}` };
   }

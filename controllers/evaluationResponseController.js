@@ -18,6 +18,13 @@ const createEvaluationResponse = async (req, res) => {
       "userId",
     ]);
 
+    if (
+      !mongoose.isValidObjectId(evaluationId) ||
+      !mongoose.isValidObjectId(userId)
+    ) {
+      throw new Error("Invalid evaluationId or userId");
+    }
+
     const evaluation = await Evaluation.findOne(
       { _id: evaluationId, "assignedUsers.user": new ObjectId(userId) },
       { "assignedUsers.$": 1 }
@@ -36,6 +43,7 @@ const createEvaluationResponse = async (req, res) => {
       responses,
       evaluation: evaluationId,
       evaluator,
+      createdBy: userId,
     });
     await evaluationRes.save();
 
@@ -54,6 +62,39 @@ const createEvaluationResponse = async (req, res) => {
   }
 };
 
+/**
+ * Get evaluation response by evaluationId
+ * URL: POST /api/evaluations-res/evaluation/:id
+ */
+const getEvaluationResponseByEvaluationId = async (req, res) => {
+  const { evaluationId, userId } = req.query;
+
+  try {
+    checkRequiredFields(req.query, ["evaluationId", "userId"]);
+
+    if (
+      !mongoose.isValidObjectId(evaluationId) ||
+      !mongoose.isValidObjectId(userId)
+    ) {
+      throw "Invalid evaluationId or userId";
+    }
+
+    const evaluationRes = await EvaluationRes.findOne({
+      evaluation: evaluationId,
+      createdBy: new ObjectId(userId),
+    });
+
+    if (!evaluationRes) {
+      throw "Evaluation  response not found";
+    }
+
+    return res.status(201).send(evaluationRes);
+  } catch (error) {
+    return res.status(400).send({ message: error });
+  }
+};
+
 module.exports = {
   createEvaluationResponse,
+  getEvaluationResponseByEvaluationId,
 };
