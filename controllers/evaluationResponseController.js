@@ -1,4 +1,4 @@
-const Evaluation = require("../models/Evaluation");
+const EvaluationRes = require("../models/EvaluationResponse");
 const { checkRequiredFields } = require("../utils/validationUtils");
 
 /**
@@ -10,7 +10,7 @@ const createEvaluationResponse = async (req, res) => {
   try {
     checkRequiredFields(req.body, ["responses", "evaluationId", "evaluator"]);
 
-    const evaluationRes = new Evaluation({
+    const evaluationRes = new EvaluationRes({
       responses,
       evaluation: evaluationId,
       evaluator,
