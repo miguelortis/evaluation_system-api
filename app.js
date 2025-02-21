@@ -11,7 +11,13 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 // Enable CORS with specific configuration
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://evaluation-system.vercel.app",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+  })
+);
 
 const routes = require("./routes");
 app.use("/api", routes);
