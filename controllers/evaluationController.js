@@ -24,8 +24,9 @@ const createEvaluation = async (req, res) => {
  * URL: GET /api/evaluations/:id
  */
 const getEvaluationById = async (req, res) => {
+  const { id } = req.params;
   try {
-    const evaluation = await Evaluation.findById(req.params.id);
+    const evaluation = await Evaluation.findById(id);
     if (!evaluation) {
       return res.status(404).send();
     }

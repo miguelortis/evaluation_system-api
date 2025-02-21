@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const evaluationSchema = new mongoose.Schema(
   {
-    employee: {
+    evaluation: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Employee",
+      ref: "Evaluation",
       required: true,
     },
     evaluator: {
@@ -12,8 +12,10 @@ const evaluationSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    score: { type: Number, required: true },
-    feedback: { type: String },
+    responses: {
+      type: Map,
+      of: mongoose.Schema.Types.Mixed,
+    },
   },
   { timestamps: true }
 );
